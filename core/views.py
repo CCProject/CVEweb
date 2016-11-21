@@ -1,6 +1,10 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from elasticsearch import Elasticsearch, RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
+from elasticsearch_dsl import Search
+import config
 import json
 
 
@@ -17,9 +21,24 @@ class cve(object):
     def toJSON(self):
         return json.dumps(self.__dict__)
 
+def createESConnection():
+    awsauth = AWS4Auth(config.es_access_key, config.es_access_secret, config.es_region, config.es_name)
+    es = Elasticsearch(
+        hosts=[{'host': config.es_host, 'port': config.es_port}],
+        http_auth=awsauth,
+        use_ssl=True,
+        verify_certs=True,
+        connection_class=RequestsHttpConnection
+    )
+    return es
 
 def ESsearch(pkgname):
+    es = createESConnection()
+    query = Search(index='t2').using(es).query("match", product=pkgname)
+    res = query.scan()
     cvelist = []
+    for hit in res:
+        cvelist.append(hit)
     return cvelist
 
 
