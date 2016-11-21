@@ -11,17 +11,13 @@ import json
 class cve(object):
     def __init__(self, data):
         self.cid = data['cveid']
-        self.refs = '["' + "","".join(data['references']) + '"]'
+        self.refs = data['references']
         self.summary = data['summary']
-        self.cpe2 = '["' + "","".join(data['cpe2']) + '"]'
-        self.cpe3 = '["' + "","".join(data['cpe3']) + '"]'
+        self.cpe2 = data['cpe2']
+        self.cpe3 = data['cpe3']
         self.vendor = data['vendor']
         self.product = data['product']
 
-    def listToJSON(self, list):
-        str = ""
-        for item in list:
-            str = str + "\"" + item + ""
     def toJSON(self):
         return json.dumps(self.__dict__)
 
@@ -43,7 +39,7 @@ def ESsearch(pkgname):
     cvelist = []
     for hit in res:
         cveitem = cve(hit)
-        cvelist.append(cveitem.toJSON())
+        cvelist.append(cveitem)
     print cvelist
     return cvelist
 
@@ -60,7 +56,7 @@ def docker(request):
 def search(request):
     pkgname = request.POST['pkgname']
     cvelist = ESsearch(pkgname)
-    return render_to_response('result.html')
+    return render_to_response('result.html', {"cvelist": cvelist})
 
 
 @csrf_exempt
