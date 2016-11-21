@@ -9,14 +9,14 @@ import json
 
 
 class cve(object):
-    def __init__(self, _vid, _refs, _summary, _cpe2, _cpe3, _vender, _product):
-        self.vid = _vid
-        self.refs = _refs
-        self.summary = _summary
-        self.cpe2 = _cpe2
-        self.cpe3 = _cpe3
-        self.vender = _vender
-        self.product = _product
+    def __init__(self, data):
+        self.cid = data['cveid']
+        self.refs = '[' + ",".join(data['references']) + ']'
+        self.summary = data['summary']
+        self.cpe2 = '[' + ",".join(data['cpe2']) + ']'
+        self.cpe3 = '[' + ",".join(data['cpe3']) + ']'
+        self.vendor = data['vendor']
+        self.product = data['product']
 
     def toJSON(self):
         return json.dumps(self.__dict__)
@@ -38,7 +38,9 @@ def ESsearch(pkgname):
     res = query.scan()
     cvelist = []
     for hit in res:
-        cvelist.append(hit)
+        cveitem = cve(hit)
+        cvelist.append(cveitem.toJSON())
+    print cvelist
     return cvelist
 
 
