@@ -11,13 +11,17 @@ import json
 class cve(object):
     def __init__(self, data):
         self.cid = data['cveid']
-        self.refs = '[' + ",".join(data['references']) + ']'
+        self.refs = '["' + "","".join(data['references']) + '"]'
         self.summary = data['summary']
-        self.cpe2 = '[' + ",".join(data['cpe2']) + ']'
-        self.cpe3 = '[' + ",".join(data['cpe3']) + ']'
+        self.cpe2 = '["' + "","".join(data['cpe2']) + '"]'
+        self.cpe3 = '["' + "","".join(data['cpe3']) + '"]'
         self.vendor = data['vendor']
         self.product = data['product']
 
+    def listToJSON(self, list):
+        str = ""
+        for item in list:
+            str = str + "\"" + item + ""
     def toJSON(self):
         return json.dumps(self.__dict__)
 
