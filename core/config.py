@@ -2,8 +2,8 @@ es_host = 'search-twitterma-demo-3jefbxfb73i3cphbsiy5prjxpu.us-west-2.es.amazona
 es_port = 443
 es_bulk_chunk_size = 1000  #number of documents to index in a single bulk operation
 
-es_access_key = 'AKIAINFSC67FK56IAHTQ'
-es_access_secret = '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'
+es_access_key = 'AKIAJQE7OCWXSMUT5A4Q'
+es_access_secret = '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'
 es_region = 'us-west-2'
 es_name = 'es'
 

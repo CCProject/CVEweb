@@ -1,3 +1,4 @@
+/core/config.py
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
