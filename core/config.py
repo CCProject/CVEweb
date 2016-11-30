@@ -9,5 +9,5 @@ twitter_access_token_secret = 'ahIrQ0UoRPf90F8527N0ghveBd213S2qJHfKTAgTwFbER'
 
 es_access_key = <aws access key>
 es_access_secret = <aws access secret>
-es_region = <elasticsearch region>
+es_region = 'us-west-2'
 es_name = 'es'
