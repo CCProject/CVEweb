@@ -6,7 +6,8 @@ from requests_aws4auth import AWS4Auth
 from elasticsearch_dsl import Search
 import config
 import json
-
+import subprocess
+import os
 
 class cve(object):
     def __init__(self, data):
@@ -40,7 +41,7 @@ def ESsearch(pkgname):
     for hit in res:
         cveitem = cve(hit)
         cvelist.append(cveitem)
-    print cvelist
+    # print cvelist
     return cvelist
 
 
@@ -54,10 +55,12 @@ def docker(request):
 
 @csrf_exempt
 def search(request):
-    pkgname = request.POST['pkgname']
+    if (request.method=="POST"):
+        pkgname = request.POST['pkgname']
+    elif (request.method=="GET"):
+        pkgname = request.GET['pkgname']
     cvelist = ESsearch(pkgname)
     return render_to_response('result.html', {"cvelist": cvelist})
-
 
 @csrf_exempt
 def analyzeDocker(request):
@@ -66,5 +69,20 @@ def analyzeDocker(request):
 @csrf_exempt
 def analyzeDockerName(request):
     dname = request.POST['dname']
-    print dname
-    return render_to_response('docker.html')
+    # print dname
+    res = os.popen('./script.sh ' + dname)
+    for i in range(4):
+        res.readline()
+    pkglist = res.read().split()
+    # print "pkg list"
+    # print pkglist
+    # for pkg in pkglist:
+      #  reslist += ESsearch(pkg)
+    return render_to_response('packages.html', {"pkglist": pkglist})
+
+
+
+
+
+
+
