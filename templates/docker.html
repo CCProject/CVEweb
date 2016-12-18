@@ -49,10 +49,25 @@
       <hr>
       <form class="form-horizontal" method="POST" action="/analyzeDocker">
       <div class="form-group">
-	  <label class="control-label col-sm-2">Docker: </label>
+	  <label class="control-label col-sm-2">Docker Image: </label>
       <div class="col-sm-10">
 	  <input type="file" id="exampleInputFile" />
       <p class="help-block">Please upload a docker image.</p>
+      </div>
+      </div>
+      <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+      </div>
+      </form>
+
+
+      <form class="form-horizontal" method="POST" action="/analyzeDockerName">
+      <div class="form-group">
+      <label class="control-label col-sm-2">Docker Name: </label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="dname" name="dname" placeholder="Please enter docker name">
       </div>
       </div>
       <div class="form-group">

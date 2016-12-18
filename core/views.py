@@ -62,3 +62,9 @@ def search(request):
 @csrf_exempt
 def analyzeDocker(request):
     return render_to_response('docker.html')
+
+@csrf_exempt
+def analyzeDockerName(request):
+    dname = request.POST['dname']
+    print dname
+    return render_to_response('docker.html')
