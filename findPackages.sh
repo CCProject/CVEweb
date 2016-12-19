@@ -1,7 +1,8 @@
 IMAGE=$1;
 
 docker pull $IMAGE
-AAA="$(docker run -it $IMAGE dpkg --get-selections | grep -v deinstall )"
+
+AAA="$(docker run -it $IMAGE dpkg --get-selections | grep -v deinstall )" || AAA="not found";
 if [[ $AAA != *"not found"* ]]
 then
   echo "${AAA}" | awk {'print $1'} > file.txt;
@@ -16,5 +17,3 @@ then
 else
  echo "No supported package manager found on image" > file.txt;
 fi
-
-
