@@ -18,8 +18,11 @@ while (True):
         print dname
         res = os.popen('./script.sh ' + dname)
         for i in range(4):
-            res.readline()
+           res.readline()
         pkglist = res.read()
+	# print pkglist
+        # txt = open("file.txt", "r")
+        # pkglist = txt.read()
         mes = Message()
         mes.set_body(pkglist)
         queuepkg.write(mes)
